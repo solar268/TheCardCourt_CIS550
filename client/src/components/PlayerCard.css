@@ -1,0 +1,36 @@
+.card {
+    background-color: #f59149;
+    color: #000000;
+    margin: 0 4px;
+    border-radius: 10px;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    align-items: center; 
+    transform-style: preserve-3d; 
+    animation: flipInX 0.5s ease-in-out; 
+    transition: transform 0.3s ease-in-out; 
+  }
+  
+  .card:hover {
+    transform: scale(1.05); 
+  }
+  
+  .player-image {
+    width: 100%; 
+    height: auto;
+    border-top-left-radius: 10px; 
+    border-top-right-radius: 10px; 
+    object-fit: cover; 
+    z-index: -1; 
+  }  
+  
+  .card-content {
+    padding: 20px; 
+  }
+  
+  .player-name {
+    font-size: 24px; 
+    margin-top: 10px;
+  }
+  
