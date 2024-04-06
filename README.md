@@ -13,3 +13,5 @@ Our dataset spans from 2004 to 2022, including detailed game data, player statis
 - **Statistical Queries**: Support for complex queries allows users to identify top scorers, rebound leaders, assist leaders, three-point specialists, most improved players, and key defensive players.
 
 Stay tuned for updates as we develop these concepts into fully functional applications that bring NBA statistics to life in new and exciting ways!
+
+Members: Jay Moon, Sean Chuang, Luke Schalles, Armaan Rathi
