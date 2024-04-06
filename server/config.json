@@ -3,7 +3,7 @@
   "rds_port": "3306",
   "rds_user": "solar9999",
   "rds_password": "NOTweak)$04",
-  "rds_db": "SWIFTIFY",
+  "rds_db": "CARDCOURT",
   "server_host": "localhost",
   "server_port": "8080"
 }
