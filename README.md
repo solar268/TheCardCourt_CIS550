@@ -1,3 +1,5 @@
+![logo](./client/src/images/logo.jpg)
+
 # TheCardCourt_CIS550
 
 **TheCardCourt** is an innovative project developed by Luke Schalles, Jay Moon, Armaan Rathi, and Sean Chuang for CIS550. This project aims to leverage extensive NBA statistics, sourced from Kaggle and the NBA Advanced Statistics website, to create engaging applications that basketball fans and data enthusiasts will love.
