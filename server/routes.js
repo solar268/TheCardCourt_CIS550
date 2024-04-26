@@ -54,7 +54,7 @@ const playerEfficiency = async function (req, res) {
            (Points + REB + AST + STL + BLK - ((FGA - FGM) + (FTA - FTM) + TurnOver)) AS EFF
     FROM Games_details
   )
-  SELECT PLAYER_ID, PLAYER_NAME, AVG(EFF) AS average_efficiency
+  SELECT PLAYER_ID, PLAYER_NAME, AVG(EFF) AS AVG_EFF
   FROM games_efficiency
   GROUP BY PLAYER_ID
   ORDER BY average_efficiency DESC
@@ -483,6 +483,43 @@ const teamTransfers = async function (req, res) {
   });
 };
 
+// Route 13: GET /players/all_stats
+const allPlayerStats = async function (req, res) {
+  connection.query(`
+  WITH games_efficiency AS (
+    SELECT PLAYER_ID, PLAYER_NAME,
+           (Points + REB + AST + STL + BLK - ((FGA - FGM) + (FTA - FTM) + TurnOver)) AS EFF, Points, REB, AST, TEAM_ID
+    FROM Games_details
+  ),
+  stats AS (
+    SELECT PLAYER_ID, PLAYER_NAME, AVG(EFF) AS AVG_EFF, AVG(Points) AS AVG_PTS, AVG(REB) AS AVG_REB, AVG(AST) AS AVG_AST, TEAM_ID 
+    FROM games_efficiency
+    GROUP BY PLAYER_ID
+  ),
+  stats2 AS (
+    SELECT PLAYER_ID, PLAYER_NAME, AVG_EFF, AVG_PTS, AVG_REB, AVG_AST, TEAM_ID,
+    PERCENT_RANK() OVER (ORDER BY AVG_EFF DESC) AS RANKING
+    FROM stats
+  )
+  SELECT PLAYER_ID, PLAYER_NAME, AVG_EFF, AVG_PTS, AVG_REB, AVG_AST, TEAM_ID, RANKING,
+  CASE
+    WHEN RANKING <= 0.1 THEN 'gold'
+    WHEN RANKING <= 0.3 THEN 'silver'
+    ELSE 'bronze'
+  END AS RARITY
+  FROM stats2
+  ORDER BY RAND()
+  LIMIT 10
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
 module.exports = {
   playerCard,
   randomTeam,
@@ -496,4 +533,6 @@ module.exports = {
   homecourtAdvantage,
   playerTransfers,
   teamTransfers,
-}
+  allPlayerStats,
+};
+
