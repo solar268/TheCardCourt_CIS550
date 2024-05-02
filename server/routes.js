@@ -520,18 +520,16 @@ const allPlayerStats = async function (req, res) {
   });
 }
 
-// Route 14: Save opened card packs
+// Route 14: Route to save opened card packs
 const saveOpenedCards = (req, res) => {
   const cards = req.body.cards;
   if (!Array.isArray(cards) || cards.length === 0) {
     return res.status(400).json({ error: 'Invalid card data. Expected a non-empty array of cards.' });
   }
 
-  // Prepare SQL query to insert cards
   const query = 'INSERT INTO SavedCards (PLAYER_ID, PLAYER_NAME, AVG_EFF, AVG_PTS, AVG_REB, AVG_AST, TEAM_ID) VALUES ?';
   const values = cards.map(card => [card.PLAYER_ID, card.PLAYER_NAME, card.AVG_EFF, card.AVG_PTS, card.AVG_REB, card.AVG_AST, card.TEAM_ID]);
 
-  // Execute the query
   connection.query(query, [values], (err, result) => {
     if (err) {
       console.error('Failed to save card:', err);
@@ -541,7 +539,7 @@ const saveOpenedCards = (req, res) => {
   });
 };
 
-// Route 15: Retrieve saved cards
+// Route 15: Route to get saved cards
 const getSavedCards = (req, res) => {
   const query = `SELECT * FROM SavedCards ORDER BY DATE_OPENED DESC;`;
   connection.query(query, (err, results) => {

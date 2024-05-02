@@ -4,12 +4,9 @@ import './ManagementPage.css';
 
 const ManagementPage = () => {
     const [cards, setCards] = useState([]);
+    const [sortConfig, setSortConfig] = useState(null);
 
     useEffect(() => {
-        fetchCards();
-    }, []);
-
-    const fetchCards = () => {
         fetch('http://localhost:8080/saved-cards')
             .then(response => response.json())
             .then(data => {
@@ -17,19 +14,40 @@ const ManagementPage = () => {
                 setCards(data);
             })
             .catch(error => console.error('Error fetching data:', error));
-    };
+    }, []);
 
     const handleReset = () => {
         fetch('http://localhost:8080/clear-saved-cards', { method: 'DELETE' })
             .then(response => response.json())
             .then(data => {
                 alert(data.message);
-                fetchCards();
+                fetch('http://localhost:8080/saved-cards')  // Refetch the data
+                    .then(response => response.json())
+                    .then(data => setCards(data))
+                    .catch(error => console.error('Error refetching data:', error));
             })
             .catch(error => {
                 console.error('Error:', error);
                 alert('Failed to clear cards.');
             });
+    };
+
+    const handleSort = (key) => {
+        let direction = 'ascending';
+        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+            direction = 'descending';
+        }
+        const sortedCards = [...cards].sort((a, b) => {
+            if (a[key] < b[key]) {
+                return direction === 'ascending' ? -1 : 1;
+            }
+            if (a[key] > b[key]) {
+                return direction === 'ascending' ? 1 : -1;
+            }
+            return 0;
+        });
+        setCards(sortedCards);
+        setSortConfig({ key, direction });
     };
 
     return (
@@ -47,31 +65,25 @@ const ManagementPage = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>Player Name</th>
-                        <th>Average Efficiency</th>
-                        <th>Average Points</th>
-                        <th>Average Rebounds</th>
-                        <th>Average Assists</th>
-                        <th>Team ID</th>
+                        <th><button onClick={() => handleSort('PLAYER_NAME')} className="sort-button">Player Name</button></th>
+                        <th><button onClick={() => handleSort('AVG_EFF')} className="sort-button">Average Efficiency</button></th>
+                        <th><button onClick={() => handleSort('AVG_PTS')} className="sort-button">Average Points</button></th>
+                        <th><button onClick={() => handleSort('AVG_REB')} className="sort-button">Average Rebounds</button></th>
+                        <th><button onClick={() => handleSort('AVG_AST')} className="sort-button">Average Assists</button></th>
+                        <th><button onClick={() => handleSort('TEAM_ID')} className="sort-button">Team ID</button></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {cards.length > 0 ? (
-                        cards.map((card, index) => (
-                            <tr key={index}>
-                                <td>{card.PLAYER_NAME}</td>
-                                <td>{parseFloat(card.AVG_EFF).toFixed(2)}</td>
-                                <td>{parseFloat(card.AVG_PTS).toFixed(2)}</td>
-                                <td>{parseFloat(card.AVG_REB).toFixed(2)}</td>
-                                <td>{parseFloat(card.AVG_AST).toFixed(2)}</td>
-                                <td>{card.TEAM_ID}</td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan="6">No cards saved.</td>
+                    {cards.map((card, index) => (
+                        <tr key={index}>
+                            <td>{card.PLAYER_NAME}</td>
+                            <td>{parseFloat(card.AVG_EFF).toFixed(2)}</td>
+                            <td>{parseFloat(card.AVG_PTS).toFixed(2)}</td>
+                            <td>{parseFloat(card.AVG_REB).toFixed(2)}</td>
+                            <td>{parseFloat(card.AVG_AST).toFixed(2)}</td>
+                            <td>{card.TEAM_ID}</td>
                         </tr>
-                    )}
+                    ))}
                 </tbody>
             </table>
         </div>

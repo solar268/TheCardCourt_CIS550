@@ -68,7 +68,9 @@ const OpenPackPage = () => {
                     </div>
                 </div>
             )}
-            <Link to="/" className="open-pack-home-button">Back to Home</Link>
+            <Link to="/">
+                <button className="management-home-button">Back to Home</button>
+            </Link>
         </div>
     );
 };
