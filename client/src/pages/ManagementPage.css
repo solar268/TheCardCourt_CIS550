@@ -22,21 +22,24 @@
 }
 
 .reset-button {
-    background-color: #f59149;
-    color: #000000;
+    background-color: #da3a05;
+    color: #f8f6f6;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
     border-radius: 20px;
     margin-top: 20px;
     text-decoration: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
 .reset-button:hover {
     opacity: 0.8;
 }
 
-.management-back-button {
+.management-home-button {
     background-color: #f59149;
     color: #000000;
     padding: 10px 20px;
@@ -62,7 +65,7 @@
 
 /* Table Styles */
 table {
-    width: 90%;
+    width: 110%;
     border-collapse: collapse;
     margin-top: 10px;
     border: 2px solid black;

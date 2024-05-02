@@ -38,7 +38,7 @@ const ManagementPage = () => {
             <div className="home-button-container">
                 <button onClick={handleReset} className="reset-button">Reset Saved Cards</button>
                 <Link to="/">
-                    <button className="management-back-button">Back to Home</button>
+                    <button className="management-home-button">Back to Home</button>
                 </Link>
                 <Link to="/open-pack">
                     <button className="management-open-pack-button">Open Pack Page</button>
