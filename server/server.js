@@ -25,8 +25,10 @@ app.get('/managers/scores', routes.managerScores);
 app.get('/teams/homecourt_advantage', routes.homecourtAdvantage);
 app.get('/players/transfers', routes.playerTransfers);
 app.get('/teams/transfers', routes.teamTransfers);
-app.get('/players/all_stats', routes.allPlayerStats); 
-
+app.get('/players/all_stats', routes.allPlayerStats);
+app.post('/save-cards', routes.saveOpenedCards);
+app.get('/saved-cards', routes.getSavedCards);
+app.delete('/clear-saved-cards', routes.clearSavedCards);
 
 app.listen(config.server_port, () => {
   console.log(`Server running at http://${config.server_host}:${config.server_port}/`)

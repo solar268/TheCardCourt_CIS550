@@ -1,0 +1,63 @@
+/* ManagementPage Styles */
+.management-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fcebca;
+    color: #000000;
+    min-height: 100vh;
+    padding-top: 20px;
+}
+
+.management-page h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.management-button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 90%;
+    /* Adjust based on your layout preference */
+    padding: 10px;
+}
+
+.reset-button {
+    background-color: #f59149;
+    color: #000000;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    margin-top: 20px;
+    text-decoration: none;
+}
+
+.reset-button:hover {
+    opacity: 0.8;
+}
+
+/* Table Styles */
+table {
+    width: 90%;
+    /* Adjust based on your layout preference */
+    border-collapse: collapse;
+    margin-top: 10px;
+    border: 2px solid black;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f59149;
+    color: white;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}

@@ -1,15 +1,28 @@
 .homepage {
   display: flex;
   flex-direction: column;
+  /* Keep column to stack title and buttons container */
   align-items: center;
+  /* Center align children */
   background-color: #fcebca;
   color: #000000;
   min-height: 100vh;
   padding-top: 20px;
 }
 
+.button-container {
+  display: flex;
+  flex-direction: row;
+  /* Layout buttons in a row */
+  justify-content: center;
+  /* Center the buttons horizontally */
+  gap: 20px;
+  /* Space between buttons */
+}
+
 .openpack_button {
   background-color: #f59149;
+  /* Orange background for open pack button */
   color: #000000;
   padding: 10px 20px;
   border: none;
@@ -20,4 +33,20 @@
 
 .openpack_button:hover {
   opacity: 0.8;
+}
+
+.management_button {
+  background-color: #f59149;
+  /* Orange background for open pack button */
+  color: #000000;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
+.management_button:hover {
+  opacity: 0.8;
+  /* Optional: Hover effect */
 }

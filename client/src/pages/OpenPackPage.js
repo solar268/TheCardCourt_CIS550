@@ -16,20 +16,46 @@ const OpenPackPage = () => {
                 return response.json();
             })
             .then(data => {
-                console.log('Received data:', data); // Check the data received in the console
                 setPlayerCards(data);
                 setShowCards(true);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
-                // Add any additional error handling as needed
+            });
+    };
+
+    const handleSaveCards = () => {
+        fetch('http://localhost:8080/save-cards', { // Match this endpoint with your server configuration
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ cards: playerCards })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Cards have been saved successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to save cards.');
             });
     };
 
     return (
         <div className="open-pack-page">
             <h1>Craft your Dream NBA Team</h1>
-            <button className="button" onClick={handleOpenPack}>Open Pack</button>
+            <div className="button-container">
+                <button className="button" onClick={handleOpenPack}>Open Pack</button>
+                {showCards && (
+                    <button className="button" onClick={handleSaveCards}>Save Cards</button>
+                )}
+            </div>
             {showCards && (
                 <div className="card-container">
                     <div className="cards-wrapper">
@@ -39,7 +65,7 @@ const OpenPackPage = () => {
                     </div>
                 </div>
             )}
-            <Link to="/" className="back-button">Go Back to Homepage</Link> {/* Add a Link to navigate back to HomePage */}
+            <Link to="/" className="back-button">Go Back to Homepage</Link>
         </div>
     );
 };
