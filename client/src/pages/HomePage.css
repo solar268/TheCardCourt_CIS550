@@ -1,3 +1,30 @@
+@keyframes typingAnimation {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.welcome-text {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typingAnimation 1s steps(20, end) forwards;
+}
+
+@keyframes popInAnimation {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .homepage {
   display: flex;
   flex-direction: column;
@@ -15,6 +42,7 @@
   width: 100%;
   margin: 20px 0;
   padding-top: 35px;
+  animation: popInAnimation 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .project-logo {

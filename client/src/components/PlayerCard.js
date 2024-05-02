@@ -42,9 +42,8 @@ const PlayerCard = ({ player }) => {
     return coloredPlayerImages[randomIndex];
   };
 
-  // Get the border color based on rarity
   const borderColor = getBorderColor(player.RARITY);
-  // Get the banner color based on rarity
+
   const bannerColor = getBannerColor(player.RARITY);
 
   const playerImageSrc = getRandomPlayerImage();
