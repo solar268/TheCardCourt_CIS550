@@ -1,28 +1,22 @@
 .homepage {
   display: flex;
   flex-direction: column;
-  /* Keep column to stack title and buttons container */
   align-items: center;
-  /* Center align children */
   background-color: #fcebca;
   color: #000000;
   min-height: 100vh;
   padding-top: 20px;
 }
 
-.button-container {
+.home-button-container {
   display: flex;
   flex-direction: row;
-  /* Layout buttons in a row */
   justify-content: center;
-  /* Center the buttons horizontally */
   gap: 20px;
-  /* Space between buttons */
 }
 
-.openpack_button {
+.home-openpack-button {
   background-color: #f59149;
-  /* Orange background for open pack button */
   color: #000000;
   padding: 10px 20px;
   border: none;
@@ -31,13 +25,12 @@
   margin-top: 20px;
 }
 
-.openpack_button:hover {
+.home-openpack-button:hover {
   opacity: 0.8;
 }
 
-.management_button {
+.home-management-button {
   background-color: #f59149;
-  /* Orange background for open pack button */
   color: #000000;
   padding: 10px 20px;
   border: none;
@@ -46,7 +39,6 @@
   margin-top: 20px;
 }
 
-.management_button:hover {
+.home-management-button:hover {
   opacity: 0.8;
-  /* Optional: Hover effect */
 }

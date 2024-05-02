@@ -18,7 +18,6 @@
     display: flex;
     justify-content: flex-end;
     width: 90%;
-    /* Adjust based on your layout preference */
     padding: 10px;
 }
 
@@ -37,10 +36,33 @@
     opacity: 0.8;
 }
 
+.management-back-button {
+    background-color: #f59149;
+    color: #000000;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    margin-top: 20px;
+    text-decoration: none;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.management-open-pack-button {
+    background-color: #f59149;
+    color: #000000;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
 /* Table Styles */
 table {
     width: 90%;
-    /* Adjust based on your layout preference */
     border-collapse: collapse;
     margin-top: 10px;
     border: 2px solid black;

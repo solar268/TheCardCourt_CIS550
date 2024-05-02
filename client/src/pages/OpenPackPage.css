@@ -8,7 +8,7 @@
     padding-top: 20px;
 }
 
-.button {
+.open-pack-button {
     background-color: #f59149;
     color: #000000;
     padding: 10px 20px;
@@ -18,11 +18,11 @@
     margin-top: 20px;
 }
 
-.button:hover {
+.open-pack-button:hover {
     opacity: 0.8;
 }
 
-.card-container {
+.open-pack-card-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,22 +31,17 @@
     box-sizing: border-box;
 }
 
-.cards-wrapper {
+.open-pack-cards-wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* Center-align the cards in the wrapper */
     gap: 20px;
-    /* Space between each card */
     max-width: 1200px;
-    /* Maximum width that cards will take up */
     width: 100%;
-    /* Full width */
     margin: 20px auto;
-    /* Centers the wrapper in the container with vertical spacing */
 }
 
-.back-button {
+.open-pack-back-button {
     background-color: #f59149;
     color: #000000;
     padding: 10px 20px;
@@ -60,6 +55,6 @@
     left: 20px;
 }
 
-.back-button:hover {
+.open-pack-back-button:hover {
     opacity: 0.8;
 }

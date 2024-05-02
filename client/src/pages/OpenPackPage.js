@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PlayerCard from '../components/PlayerCard';
-import './OpenPackPage.css'; // Create and use specific styles for this page
+import './OpenPackPage.css';
 
 const OpenPackPage = () => {
     const [showCards, setShowCards] = useState(false);
@@ -25,7 +25,7 @@ const OpenPackPage = () => {
     };
 
     const handleSaveCards = () => {
-        fetch('http://localhost:8080/save-cards', { // Match this endpoint with your server configuration
+        fetch('http://localhost:8080/save-cards', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -50,22 +50,25 @@ const OpenPackPage = () => {
     return (
         <div className="open-pack-page">
             <h1>Craft your Dream NBA Team</h1>
-            <div className="button-container">
-                <button className="button" onClick={handleOpenPack}>Open Pack</button>
+            <div className="home-button-container">
+                <button className="open-pack-button" onClick={handleOpenPack}>Open Pack</button>
                 {showCards && (
-                    <button className="button" onClick={handleSaveCards}>Save Cards</button>
+                    <button className="open-pack-button" onClick={handleSaveCards}>Save Cards</button>
                 )}
+                <Link to="/management">
+                    <button className="open-pack-button">Card Management Page</button>
+                </Link>
             </div>
             {showCards && (
-                <div className="card-container">
-                    <div className="cards-wrapper">
+                <div className="open-pack-card-container">
+                    <div className="open-pack-cards-wrapper">
                         {playerCards.map(player => (
                             <PlayerCard key={player.PLAYER_ID} player={player} />
                         ))}
                     </div>
                 </div>
             )}
-            <Link to="/" className="back-button">Go Back to Homepage</Link>
+            <Link to="/" className="open-pack-back-button">Back to Home</Link>
         </div>
     );
 };

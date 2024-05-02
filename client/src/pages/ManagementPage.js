@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './ManagementPage.css'; // Import the CSS for this page
+import { Link } from 'react-router-dom';
+import './ManagementPage.css';
 
 const ManagementPage = () => {
     const [cards, setCards] = useState([]);
@@ -12,7 +13,7 @@ const ManagementPage = () => {
         fetch('http://localhost:8080/saved-cards')
             .then(response => response.json())
             .then(data => {
-                console.log('Received saved cards:', data); // Useful for debugging
+                console.log('Received saved cards:', data);
                 setCards(data);
             })
             .catch(error => console.error('Error fetching data:', error));
@@ -22,8 +23,8 @@ const ManagementPage = () => {
         fetch('http://localhost:8080/clear-saved-cards', { method: 'DELETE' })
             .then(response => response.json())
             .then(data => {
-                alert(data.message); // Inform the user of the reset
-                fetchCards(); // Refresh the cards to show the updated state
+                alert(data.message);
+                fetchCards();
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -34,8 +35,14 @@ const ManagementPage = () => {
     return (
         <div className="management-page">
             <h1>My Saved Cards</h1>
-            <div className="management-button-container">
+            <div className="home-button-container">
                 <button onClick={handleReset} className="reset-button">Reset Saved Cards</button>
+                <Link to="/">
+                    <button className="management-back-button">Back to Home</button>
+                </Link>
+                <Link to="/open-pack">
+                    <button className="management-open-pack-button">Open Pack Page</button>
+                </Link>
             </div>
             <table>
                 <thead>

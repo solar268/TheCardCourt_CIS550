@@ -6,16 +6,14 @@ const HomePage = () => {
   return (
     <div className="homepage">
       <h1>Welcome to the NBA Card Collector</h1>
-      <div className="button-container">
+      <div className="home-button-container">
         <Link to="/open-pack">
-          <button className="openpack_button">Open Pack</button>
+          <button className="home-openpack-button">Open Pack Page</button>
         </Link>
         <Link to="/management">
-          <button className="management_button">Manage Cards</button>
+          <button className="home-management-button">Card Management Page</button>
         </Link>
       </div>
-      {/* Optional Links for other features */}
-      {/* <Link to="/team"><button>Manage Team</button></Link> */}
       {/* <Link to="/dictionary"><button>Player Dictionary</button></Link> */}
     </div>
   );
