@@ -16,6 +16,7 @@
     cursor: pointer;
     border-radius: 20px;
     margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .open-pack-button:hover {
@@ -53,6 +54,7 @@
     position: absolute;
     top: 20px;
     left: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .open-pack-back-button:hover {

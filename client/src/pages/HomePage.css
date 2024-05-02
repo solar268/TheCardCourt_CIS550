@@ -8,6 +8,35 @@
   padding-top: 20px;
 }
 
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 20px 0;
+  padding-top: 35px;
+}
+
+.project-logo {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-right: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.project-description {
+  width: 400px;
+  height: 360px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: left;
+  border-radius: 10px;
+}
+
 .home-button-container {
   display: flex;
   flex-direction: row;
@@ -23,6 +52,7 @@
   cursor: pointer;
   border-radius: 20px;
   margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .home-openpack-button:hover {
@@ -37,6 +67,7 @@
   cursor: pointer;
   border-radius: 20px;
   margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .home-management-button:hover {
