@@ -58,3 +58,17 @@
 .open-pack-back-button:hover {
     opacity: 0.8;
 }
+
+.save-card-button {
+    background-color: #a0d856;
+    color: #000000;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.save-card-button:hover {
+    opacity: 0.8;
+}

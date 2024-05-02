@@ -53,7 +53,7 @@ const OpenPackPage = () => {
             <div className="home-button-container">
                 <button className="open-pack-button" onClick={handleOpenPack}>Open Pack</button>
                 {showCards && (
-                    <button className="open-pack-button" onClick={handleSaveCards}>Save Cards</button>
+                    <button className="save-card-button" onClick={handleSaveCards}>Save Cards</button>
                 )}
                 <Link to="/management">
                     <button className="open-pack-button">Card Management Page</button>
