@@ -42,10 +42,8 @@
   transform-style: preserve-3d;
   animation: flipInX 0.5s ease-in-out;
   transition: transform 0.3s ease-in-out;
-  min-width: 200px;
-  /* Set a minimum width for the card */
-  min-height: 150px;
-  /* Set a minimum height for the card */
+  min-width: 250px; /* Adjust as needed */
+  min-height: 300px; /* Adjust as needed */
   max-width: 300px;
   /* Set a maximum width for the card */
   overflow: hidden;
@@ -66,21 +64,27 @@
 }
 
 .player-image {
-  width: 100%;
-  height: auto;
+  width: 50%;
+  height: 50%;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  object-fit: cover;
+  object-fit: contain;
   z-index: -1;
 }
 
 .card-content {
-  padding: 20px;
+  padding: 10px;
+  flex: 1; /* Allow the content to expand vertically */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .player-name {
   font-size: 20px;
   margin-top: 10px;
+  margin-bottom: 0;
   text-align: center;
   /* Center-align the player name */
   overflow: hidden;
@@ -90,3 +94,20 @@
   white-space: nowrap;
   /* Prevent wrapping */
 }
+
+/* Additional styles for red player image */
+.red-player-image {
+  width: 40%; /* Reduce the width slightly */
+  height: auto;
+  object-fit: contain;
+}
+
+/* Apply the red-player-image styles to the red player image */
+.card-content .player-image[src$="red_player.png"] {
+  /* Apply red-player-image styles only to the red player image */
+  width: 40%; /* Reduce the width slightly */
+  height: auto;
+  object-fit: contain;
+}
+
+

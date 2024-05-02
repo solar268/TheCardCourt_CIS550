@@ -31,9 +31,10 @@
   height: 360px;
   padding: 20px;
   border: 1px solid #ddd;
-  background-color: #ffffff;
+  background-color: #f4eed8;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  text-align: left;
+  color: #000104;
+  text-align: center;
   border-radius: 10px;
 }
 
