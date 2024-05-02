@@ -60,6 +60,7 @@ const PlayerCard = ({ player }) => {
         <p className="stat-item">Points: {roundToOneDecimal(player.AVG_PTS)}</p> 
         <p className="stat-item">Assists: {roundToOneDecimal(player.AVG_AST)}</p> 
         <p className="stat-item">Rebounds: {roundToOneDecimal(player.AVG_REB)}</p> 
+        <p className="stat-item">Team: {player.TEAM_NAME}</p> 
       </div>
     </div>
   );
