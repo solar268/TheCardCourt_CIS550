@@ -8,6 +8,7 @@
 }
 
 .welcome-text {
+  font-size: 48px;
   overflow: hidden;
   white-space: nowrap;
   animation: typingAnimation 1s steps(20, end) forwards;
