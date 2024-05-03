@@ -6,7 +6,9 @@ import logo from '../images/logo.jpg';
 const HomePage = () => {
   return (
     <div className="homepage">
-      <h1>Welcome to the NBA Card Collector</h1>
+      <div className="welcome-container">
+        <h1 className="welcome-text">Welcome to the NBA Card Collector</h1>
+      </div>
       <div className="home-button-container">
         <Link to="/open-pack">
           <button className="home-openpack-button">Open Pack Page</button>
@@ -22,7 +24,6 @@ const HomePage = () => {
           <p>TheCardCourt is an innovative project developed by Luke Schalles, Jay Moon, Armaan Rathi, and Sean Chuang for CIS550. This project aims to leverage extensive NBA statistics, sourced from Kaggle and the NBA Advanced Statistics website, to create engaging applications that basketball fans and data enthusiasts will love.</p>
         </div>
       </div>
-      {/* <Link to="/dictionary"><button>Player Dictionary</button></Link> */}
     </div>
   );
 };

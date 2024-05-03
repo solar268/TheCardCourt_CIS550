@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PlayerCard from '../components/PlayerCard';
 import './OpenPackPage.css';
+import loading_ball from '../images/spinning_basketball.gif';
 
 const OpenPackPage = () => {
     const [showCards, setShowCards] = useState(false);
     const [playerCards, setPlayerCards] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleOpenPack = () => {
+        setIsLoading(true); 
         fetch('http://localhost:8080/players/all_stats')
             .then(response => {
                 if (!response.ok) {
@@ -18,9 +21,11 @@ const OpenPackPage = () => {
             .then(data => {
                 setPlayerCards(data);
                 setShowCards(true);
+                setIsLoading(false);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
+                setIsLoading(false);
             });
     };
 
@@ -59,6 +64,7 @@ const OpenPackPage = () => {
                     <button className="open-pack-button">Card Management Page</button>
                 </Link>
             </div>
+            {isLoading && <img src={loading_ball} alt="Loading" className="loading-icon" />}
             {showCards && (
                 <div className="open-pack-card-container">
                     <div className="open-pack-cards-wrapper">

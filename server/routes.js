@@ -501,13 +501,13 @@ const allPlayerStats = async function (req, res) {
     PERCENT_RANK() OVER (ORDER BY AVG_EFF DESC) AS RANKING
     FROM stats
   )
-  SELECT PLAYER_ID, PLAYER_NAME, AVG_EFF, AVG_PTS, AVG_REB, AVG_AST, TEAM_ID, RANKING,
+  SELECT PLAYER_ID, PLAYER_NAME, AVG_EFF, AVG_PTS, AVG_REB, AVG_AST, stats2.TEAM_ID, NICKNAME AS TEAM_NAME, RANKING,
   CASE
     WHEN RANKING <= 0.1 THEN 'gold'
     WHEN RANKING <= 0.3 THEN 'silver'
     ELSE 'bronze'
   END AS RARITY
-  FROM stats2
+  FROM stats2 JOIN Teams ON stats2.TEAM_ID=Teams.TEAM_ID
   ORDER BY RAND()
   LIMIT 10
   `, (err, data) => {
