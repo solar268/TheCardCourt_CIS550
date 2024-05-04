@@ -65,23 +65,25 @@ const ManagementPage = () => {
             <table>
                 <thead>
                     <tr>
-                        <th><button onClick={() => handleSort('PLAYER_NAME')} className="sort-button">Player Name</button></th>
-                        <th><button onClick={() => handleSort('AVG_EFF')} className="sort-button">Average Efficiency</button></th>
-                        <th><button onClick={() => handleSort('AVG_PTS')} className="sort-button">Average Points</button></th>
-                        <th><button onClick={() => handleSort('AVG_REB')} className="sort-button">Average Rebounds</button></th>
-                        <th><button onClick={() => handleSort('AVG_AST')} className="sort-button">Average Assists</button></th>
-                        <th><button onClick={() => handleSort('TEAM_ID')} className="sort-button">Team ID</button></th>
+                    <th><button onClick={() => handleSort('PLAYER_NAME')} className="sort-button">Player Name</button></th>
+                    <th><button onClick={() => handleSort('AVG_EFF')} className="sort-button">Efficiency</button></th>
+                    <th><button onClick={() => handleSort('3pt_rank')} className="sort-button">3PT Rank</button></th>
+                    <th><button onClick={() => handleSort('fg_rank')} className="sort-button">FG Rank</button></th>
+                    <th><button onClick={() => handleSort('defensive_rank')} className="sort-button">Defensive Rank</button></th>
+                    <th><button onClick={() => handleSort('assist_rank')} className="sort-button">Teamwork</button></th>
+                    <th><button onClick={() => handleSort('NICKNAME')} className="sort-button">Current Team</button></th>
                     </tr>
                 </thead>
                 <tbody>
                     {cards.map((card, index) => (
                         <tr key={index}>
                             <td>{card.PLAYER_NAME}</td>
-                            <td>{parseFloat(card.AVG_EFF).toFixed(2)}</td>
-                            <td>{parseFloat(card.AVG_PTS).toFixed(2)}</td>
-                            <td>{parseFloat(card.AVG_REB).toFixed(2)}</td>
-                            <td>{parseFloat(card.AVG_AST).toFixed(2)}</td>
-                            <td>{card.TEAM_ID}</td>
+                            <td>{parseFloat(card.AVG_EFF).toFixed(1)}</td>
+                            <td>{card['3pt_rank']}</td>
+                            <td>{card.fg_rank}</td>
+                            <td>{card.defensive_rank}</td>
+                            <td>{card.assist_rank}</td>
+                            <td>{card.NICKNAME}</td>
                         </tr>
                     ))}
                 </tbody>
