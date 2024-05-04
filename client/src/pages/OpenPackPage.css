@@ -2,10 +2,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #fcebca;
+    background-image: url('../images/nba3.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: #000000;
     min-height: 100vh;
+    width: 100vw;
     padding-top: 20px;
+    background-attachment: fixed;
 }
 
 .open-pack-button {
