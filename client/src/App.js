@@ -2,8 +2,10 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import OpenPackPage from './pages/OpenPackPage';
-import './App.css';
 import ManagementPage from './pages/ManagementPage';
+import SearchPage from './pages/SearchPage';
+import './App.css';
+
 
 const App = () => {
   return (
@@ -13,7 +15,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/open-pack" element={<OpenPackPage />} />
           <Route path="/management" element={<ManagementPage />} />
-          {/* <Route path="/dictionary" element={<DictionaryPage />} /> */}
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
       </BrowserRouter>
     </div>

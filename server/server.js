@@ -35,6 +35,7 @@ app.get('/players/defensive_stats', routes.defensiveStats);
 app.get('/players/teamwork_stats', routes.teamworkStats);
 app.get('/players/current_team', routes.teamName);
 app.get('/players/get_team_legacy', routes.getTeamLegacy);
+app.get('/players/search', routes.searchPlayers);
 
 app.listen(config.server_port, () => {
   console.log(`Server running at http://${config.server_host}:${config.server_port}/`)

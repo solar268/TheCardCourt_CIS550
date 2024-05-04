@@ -49,7 +49,7 @@ const randomTeam = async function (req, res) {
 // Route 3: GET /players/efficiency
 const playerEfficiency = async function (req, res) {
   // Get player IDs from query parameter
-  const playerIds = req.query.player_ids;  
+  const playerIds = req.query.player_ids;
   if (!playerIds) {
     return res.status(400).json({ error: 'No player IDs provided' });
   }
@@ -81,7 +81,7 @@ const playerEfficiency = async function (req, res) {
 // Route 4: GET /players/rarities
 const playerRarity = async function (req, res) {
   // Get player IDs from query parameter
-  const playerIds = req.query.player_ids;  
+  const playerIds = req.query.player_ids;
   if (!playerIds) {
     return res.status(400).json({ error: 'No player IDs provided' });
   }
@@ -338,7 +338,7 @@ const managerScores = async function (req, res) {
 // Route 10: GET /teams/homecourt_advantage
 const homecourtAdvantage = async function (req, res) {
   // Get player IDs from query parameter
-  const teamIds = req.query.team_ids;  
+  const teamIds = req.query.team_ids;
   if (!teamIds) {
     return res.status(400).json({ error: 'No player IDs provided' });
   }
@@ -515,7 +515,7 @@ const teamTransfers = async function (req, res) {
 // Route 13: GET /players/all_stats
 const allPlayerStats = async function (req, res) {
   // Get player IDs from query parameter
-  const playerIds = req.query.player_ids;  
+  const playerIds = req.query.player_ids;
   if (!playerIds) {
     return res.status(400).json({ error: 'No player IDs provided' });
   }
@@ -636,7 +636,7 @@ const getRandomPlayers = async function (req, res) {
 // Route 18: GET /players/offensive_stats
 const offensiveStats = async function (req, res) {
   // Get player IDs from query parameter
-  const playerIds = req.query.player_ids;  
+  const playerIds = req.query.player_ids;
   if (!playerIds) {
     return res.status(400).json({ error: 'No player IDs provided' });
   }
@@ -696,7 +696,7 @@ const offensiveStats = async function (req, res) {
 // Route 19: GET /players/defensive_stats
 const defensiveStats = async function (req, res) {
   // Get player IDs from query parameter
-  const playerIds = req.query.player_ids;  
+  const playerIds = req.query.player_ids;
   if (!playerIds) {
     return res.status(400).json({ error: 'No player IDs provided' });
   }
@@ -743,7 +743,7 @@ const defensiveStats = async function (req, res) {
 // Route 20: GET /players/teamwork_stats
 const teamworkStats = async function (req, res) {
   // Get player IDs from query parameter
-  const playerIds = req.query.player_ids;  
+  const playerIds = req.query.player_ids;
   if (!playerIds) {
     return res.status(400).json({ error: 'No player IDs provided' });
   }
@@ -790,7 +790,7 @@ const teamworkStats = async function (req, res) {
 // Route 21: GET /players/current_team
 const teamName = async function (req, res) {
   // Get player IDs from query parameter
-  const playerIds = req.query.player_ids;  
+  const playerIds = req.query.player_ids;
   if (!playerIds) {
     return res.status(400).json({ error: 'No player IDs provided' });
   }
@@ -822,7 +822,7 @@ const teamName = async function (req, res) {
 // Route 22: GET /players/get_team_legacy
 const getTeamLegacy = async function (req, res) {
   // Get player IDs from query parameter
-  const teamIds = req.query.team_ids;  
+  const teamIds = req.query.team_ids;
   if (!teamIds) {
     return res.status(400).json({ error: 'No player IDs provided' });
   }
@@ -878,6 +878,45 @@ const getTeamLegacy = async function (req, res) {
   });
 }
 
+// Route 23: GET /players/search
+const searchPlayers = async function (req, res) {
+  const { name, season, team } = req.query;
+
+  if (!name && !season && !team) {
+    return res.status(400).json({ error: 'No search parameters provided' });
+  }
+
+  let query = `
+      SELECT p.PLAYER_NAME, p.SEASON, t.ABBREVIATION as TEAM_ABBREVIATION, p.PLAYER_ID
+      FROM Players p
+      JOIN Teams t ON p.TEAM_ID = t.TEAM_ID
+      WHERE 1 = 1
+  `;
+
+  if (name) {
+    query += ` AND p.PLAYER_NAME LIKE '%${name}%'`;
+  }
+  if (season) {
+    query += ` AND p.SEASON = ${mysql.escape(season)}`;
+  }
+  if (team) {
+    query += ` AND t.ABBREVIATION LIKE '%${team}%'`;
+  }
+
+  query += ' ORDER BY p.SEASON DESC, p.PLAYER_NAME;';
+
+  connection.query(query, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      return res.status(404).json({ error: 'No players found' });
+    } else {
+      res.json(data);
+    }
+  });
+};
+
+
+
 module.exports = {
   playerCard,
   randomTeam,
@@ -901,4 +940,5 @@ module.exports = {
   teamworkStats,
   teamName,
   getTeamLegacy,
+  searchPlayers
 };

@@ -16,6 +16,9 @@ const HomePage = () => {
         <Link to="/management">
           <button className="home-management-button">Card Management Page</button>
         </Link>
+        <Link to="/search">
+          <button className="home-search-button">Search Players</button>
+        </Link>
       </div>
       <div className="logo-container">
         <img src={logo} alt="NBA Card Collector Logo" className="project-logo" />
