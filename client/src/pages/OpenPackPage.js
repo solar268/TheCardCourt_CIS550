@@ -55,20 +55,13 @@ const OpenPackPage = () => {
                     ...currentTeam.find(ct => ct.PLAYER_ID === player.PLAYER_ID),
                 };
             
-                // check if any of the required properties are NaN or undefined
-                if (!isNaN(player.AVG_EFF) &&
-                    !isNaN(player['3pt_rank']) &&
-                    !isNaN(player.fg_rank) &&
-                    !isNaN(player.defensive_rank) &&
-                    !isNaN(player.assist_rank) &&
-                    player.PLAYER_NAME &&
-                    player.NICKNAME
-                ) {
-                    return null; // skip this player if any required data is NaN or missing
+
+                // if efficiency is NaN, set to null to later remove
+                if (isNaN(playerData.AVG_EFF)) {
+                    return null;
                 }
-            
                 return playerData;
-            }).filter(Boolean); // Remove any null entries
+            }).filter(Boolean);
 
             // update player cards and set loading false
             setPlayerCards(combinedData);
