@@ -566,8 +566,21 @@ const saveOpenedCards = (req, res) => {
     return res.status(400).json({ error: 'Invalid card data. Expected a non-empty array of cards.' });
   }
 
-  const query = 'INSERT INTO SavedCards (PLAYER_ID, PLAYER_NAME, AVG_EFF, AVG_PTS, AVG_REB, AVG_AST, TEAM_ID) VALUES ?';
-  const values = cards.map(card => [card.PLAYER_ID, card.PLAYER_NAME, card.AVG_EFF, card.AVG_PTS, card.AVG_REB, card.AVG_AST, card.TEAM_ID]);
+  const query = `
+  INSERT INTO SavedCards (
+    PLAYER_ID, PLAYER_NAME, AVG_EFF, 3pt_rank, fg_rank, defensive_rank, assist_rank, NICKNAME
+  ) VALUES ?
+  `;
+  const values = cards.map(card => [
+    card.PLAYER_ID,
+    card.PLAYER_NAME,
+    card.AVG_EFF,
+    card['3pt_rank'],
+    card.fg_rank,
+    card.defensive_rank,
+    card.assist_rank,
+    card.NICKNAME
+  ]);
 
   connection.query(query, [values], (err, result) => {
     if (err) {

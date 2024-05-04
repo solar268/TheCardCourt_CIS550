@@ -23,7 +23,7 @@ const OpenPackPage = () => {
                 const statsResponse = await fetch(`http://localhost:8080/players/${endpoint}?player_ids=${playerIds}`);
                 if (!statsResponse.ok) throw new Error(`Failed to fetch ${endpoint}`);
                 return statsResponse.json();
-            };
+            };  
 
             // const fetchTeamStats = async (endpoint) => {
             //     const statsResponse = await fetch(`http://localhost:8080/teams/${endpoint}?player_ids=${playerIds}`);
@@ -31,7 +31,6 @@ const OpenPackPage = () => {
             //     return statsResponse.json();
             // };
 
-    
             // fetch data for player
             // const rarity = await fetchStats('rarities');
             const ranking = await fetchStats('all_stats');
@@ -46,17 +45,30 @@ const OpenPackPage = () => {
             // const homecourtAdvantage = await fetchTeamStats('get_team_legacy');
 
             // combine all results
-            const combinedData = players.map(player => ({
-                // ...rarity.find(r => r.PLAYER_ID === player.PLAYER_ID),
-                ...ranking.find(rnk => rnk.PLAYER_ID === player.PLAYER_ID),
-                ...efficiency.find(e => e.PLAYER_ID === player.PLAYER_ID),
-                ...offensive.find(o => o.PLAYER_ID === player.PLAYER_ID),
-                ...defensive.find(d => d.PLAYER_ID === player.PLAYER_ID),
-                ...teamwork.find(t => t.PLAYER_ID === player.PLAYER_ID),
-                ...currentTeam.find(ct => ct.PLAYER_ID === player.PLAYER_ID),
-                // ...teamLegacy.find(tl => tl.TEAM_ID === player.TEAM_ID),
-                // ...homecourtAdvantage.find(ha => ha.TEAM_ID === player.TEAM_ID)
-            }));
+            const combinedData = players.map(player => {
+                const playerData = {
+                    ...ranking.find(rnk => rnk.PLAYER_ID === player.PLAYER_ID),
+                    ...efficiency.find(e => e.PLAYER_ID === player.PLAYER_ID),
+                    ...offensive.find(o => o.PLAYER_ID === player.PLAYER_ID),
+                    ...defensive.find(d => d.PLAYER_ID === player.PLAYER_ID),
+                    ...teamwork.find(t => t.PLAYER_ID === player.PLAYER_ID),
+                    ...currentTeam.find(ct => ct.PLAYER_ID === player.PLAYER_ID),
+                };
+            
+                // check if any of the required properties are NaN or undefined
+                if (!isNaN(player.AVG_EFF) &&
+                    !isNaN(player['3pt_rank']) &&
+                    !isNaN(player.fg_rank) &&
+                    !isNaN(player.defensive_rank) &&
+                    !isNaN(player.assist_rank) &&
+                    player.PLAYER_NAME &&
+                    player.NICKNAME
+                ) {
+                    return null; // skip this player if any required data is NaN or missing
+                }
+            
+                return playerData;
+            }).filter(Boolean); // Remove any null entries
 
             // update player cards and set loading false
             setPlayerCards(combinedData);
@@ -69,12 +81,22 @@ const OpenPackPage = () => {
     };
 
     const handleSaveCards = () => { 
+        const cardsToSave = playerCards.map(player => ({
+            PLAYER_ID: player.PLAYER_ID,
+            PLAYER_NAME: player.PLAYER_NAME,
+            AVG_EFF: player.AVG_EFF,
+            '3pt_rank': player['3pt_rank'],
+            fg_rank: player.fg_rank,
+            defensive_rank: player.defensive_rank,
+            assist_rank: player.assist_rank,
+            NICKNAME: player.NICKNAME,
+          }));
         fetch('http://localhost:8080/save-cards', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ cards: playerCards })
+            body: JSON.stringify({ cards: cardsToSave })
         })
             .then(response => {
                 if (!response.ok) {
