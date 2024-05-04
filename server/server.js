@@ -29,6 +29,12 @@ app.get('/players/all_stats', routes.allPlayerStats);
 app.post('/save-cards', routes.saveOpenedCards);
 app.get('/saved-cards', routes.getSavedCards);
 app.delete('/clear-saved-cards', routes.clearSavedCards);
+app.get('/players/get_random_players', routes.getRandomPlayers);
+app.get('/players/offensive_stats', routes.offensiveStats);
+app.get('/players/defensive_stats', routes.defensiveStats);
+app.get('/players/teamwork_stats', routes.teamworkStats);
+app.get('/players/current_team', routes.teamName);
+app.get('/players/get_team_legacy', routes.getTeamLegacy);
 
 app.listen(config.server_port, () => {
   console.log(`Server running at http://${config.server_host}:${config.server_port}/`)

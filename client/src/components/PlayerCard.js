@@ -56,11 +56,19 @@ const PlayerCard = ({ player }) => {
       <h5 className="player-name">{player.PLAYER_NAME}</h5>
       <div className="card-content">
         <img src={playerImageSrc} alt="Player" className="player-image" /> 
-        <p className="stat-item">Efficiency: {roundToOneDecimal(player.AVG_EFF)}</p> 
-        <p className="stat-item">Points: {roundToOneDecimal(player.AVG_PTS)}</p> 
+        {/* <p className="stat-item">Efficiency: {roundToOneDecimal(player.AVG_EFF)}</p>  */}
+        {/* <p className="stat-item">Points: {roundToOneDecimal(player.AVG_PTS)}</p> 
         <p className="stat-item">Assists: {roundToOneDecimal(player.AVG_AST)}</p> 
         <p className="stat-item">Rebounds: {roundToOneDecimal(player.AVG_REB)}</p> 
-        <p className="stat-item">Team: {player.TEAM_NAME}</p> 
+        <p className="stat-item">Team: {player.TEAM_NAME}</p>  */}
+        <p className="stat-item">Efficiency: {roundToOneDecimal(player.AVG_EFF)}</p> 
+        <p className="stat-item">3PT Rank: {player['3pt_rank']}</p>
+        <p className="stat-item">FG Rank: {player.fg_rank}</p>
+        <p className="stat-item">Defensive Rank: {player.defensive_rank}</p>
+        <p className="stat-item">Teamwork: {player.assist_rank}</p>
+        <p className="stat-item">Current Team: {player.NICKNAME}</p>
+        {/* <p className="stat-item">Homecourt Advantage: {player.homecourt_adv}</p>
+        <p className="stat-item">Team Legacy: {player.franchise_legacy}</p> */}
       </div>
     </div>
   );

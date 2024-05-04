@@ -48,6 +48,15 @@ const randomTeam = async function (req, res) {
 
 // Route 3: GET /players/efficiency
 const playerEfficiency = async function (req, res) {
+  // Get player IDs from query parameter
+  const playerIds = req.query.player_ids;  
+  if (!playerIds) {
+    return res.status(400).json({ error: 'No player IDs provided' });
+  }
+
+  // split on commas
+  const ids = playerIds.split(',').map(id => parseInt(id));
+
   connection.query(`
   WITH games_efficiency AS (
     SELECT PLAYER_ID, PLAYER_NAME,
@@ -56,8 +65,9 @@ const playerEfficiency = async function (req, res) {
   )
   SELECT PLAYER_ID, PLAYER_NAME, AVG(EFF) AS AVG_EFF
   FROM games_efficiency
+  WHERE PLAYER_ID IN (${ids})
   GROUP BY PLAYER_ID
-  ORDER BY average_efficiency DESC
+  ORDER BY AVG_EFF DESC
   `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
@@ -70,6 +80,15 @@ const playerEfficiency = async function (req, res) {
 
 // Route 4: GET /players/rarities
 const playerRarity = async function (req, res) {
+  // Get player IDs from query parameter
+  const playerIds = req.query.player_ids;  
+  if (!playerIds) {
+    return res.status(400).json({ error: 'No player IDs provided' });
+  }
+
+  // split on commas
+  const ids = playerIds.split(',').map(id => parseInt(id));
+
   connection.query(`
     WITH games_performance_index AS (
       SELECT PLAYER_ID, PLAYER_NAME, TEAM_ID,
@@ -90,6 +109,7 @@ const playerRarity = async function (req, res) {
                ELSE 'bronze'
            END AS rarity
     FROM player_ranks
+    WHERE PLAYER_ID IN (${ids})
   `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
@@ -317,6 +337,14 @@ const managerScores = async function (req, res) {
 
 // Route 10: GET /teams/homecourt_advantage
 const homecourtAdvantage = async function (req, res) {
+  // Get player IDs from query parameter
+  const teamIds = req.query.team_ids;  
+  if (!teamIds) {
+    return res.status(400).json({ error: 'No player IDs provided' });
+  }
+
+  // split on commas
+  const ids = teamIds.split(',').map(id => parseInt(id));
   connection.query(`
     WITH total_home_wins AS (
         SELECT HOME_TEAM_ID, SUM(HOME_TEAM_WINS) AS HOME_WINS
@@ -343,6 +371,7 @@ const homecourtAdvantage = async function (req, res) {
            END AS homecourt_adv
     FROM homecourt_adv_percentiles hca
     JOIN Teams t ON t.TEAM_ID = hca.HOME_TEAM_ID
+    WHERE t.TEAM_ID IN (${ids})
   `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
@@ -485,6 +514,15 @@ const teamTransfers = async function (req, res) {
 
 // Route 13: GET /players/all_stats
 const allPlayerStats = async function (req, res) {
+  // Get player IDs from query parameter
+  const playerIds = req.query.player_ids;  
+  if (!playerIds) {
+    return res.status(400).json({ error: 'No player IDs provided' });
+  }
+
+  // split on commas
+  const ids = playerIds.split(',').map(id => parseInt(id));
+
   connection.query(`
   WITH games_efficiency AS (
     SELECT PLAYER_ID, PLAYER_NAME,
@@ -508,6 +546,7 @@ const allPlayerStats = async function (req, res) {
     ELSE 'bronze'
   END AS RARITY
   FROM stats2 JOIN Teams ON stats2.TEAM_ID=Teams.TEAM_ID
+  WHERE PLAYER_ID IN (${ids})
   ORDER BY RAND()
   LIMIT 10
   `, (err, data) => {
@@ -564,6 +603,267 @@ const clearSavedCards = (req, res) => {
   });
 };
 
+// Route 17: GET /players/get_random_players
+const getRandomPlayers = async function (req, res) {
+  connection.query(`
+  SELECT PLAYER_ID, TEAM_ID
+  FROM Players
+  ORDER BY RAND()
+  LIMIT 10
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
+// Route 18: GET /players/offensive_stats
+const offensiveStats = async function (req, res) {
+  // Get player IDs from query parameter
+  const playerIds = req.query.player_ids;  
+  if (!playerIds) {
+    return res.status(400).json({ error: 'No player IDs provided' });
+  }
+
+  // split on commas
+  const ids = playerIds.split(',').map(id => parseInt(id));
+
+  connection.query(`
+  WITH total_pts_table AS (
+    SELECT PLAYER_ID, SUM(FG3M) AS TOTAL_3PT, SUM(FGM) AS TOTAL_FG
+    FROM Games_details
+    GROUP BY PLAYER_ID
+    ),
+    scoring_percentiles AS (
+      SELECT PLAYER_ID,
+             NTILE(10) OVER (ORDER BY TOTAL_3PT DESC) AS 3pt_rank,
+             NTILE(10) OVER (ORDER BY TOTAL_FG) AS fg_rank
+      FROM total_pts_table
+    )
+  SELECT PLAYER_ID,
+    CASE
+        WHEN 3pt_rank = 1 THEN '10/10'
+        WHEN 3pt_rank = 2 THEN '9/10'
+        WHEN 3pt_rank = 3 THEN '8/10'
+        WHEN 3pt_rank = 4 THEN '7/10'
+        WHEN 3pt_rank = 5 THEN '6/10'
+        WHEN 3pt_rank = 6 THEN '5/10'
+        WHEN 3pt_rank = 7 THEN '4/10'
+        WHEN 3pt_rank = 8 THEN '3/10'
+        WHEN 3pt_rank = 9 THEN '2/10'
+        ELSE '1/10'
+    END AS 3pt_rank,
+    CASE
+        WHEN fg_rank = 1 THEN '10/10'
+        WHEN fg_rank = 2 THEN '9/10'
+        WHEN fg_rank = 3 THEN '8/10'
+        WHEN fg_rank = 4 THEN '7/10'
+        WHEN fg_rank = 5 THEN '6/10'
+        WHEN fg_rank = 6 THEN '5/10'
+        WHEN fg_rank = 7 THEN '4/10'
+        WHEN fg_rank = 8 THEN '3/10'
+        WHEN fg_rank = 9 THEN '2/10'
+        ELSE '1/10'
+    END AS fg_rank
+  FROM scoring_percentiles
+  WHERE PLAYER_ID IN (${ids})
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
+// Route 19: GET /players/defensive_stats
+const defensiveStats = async function (req, res) {
+  // Get player IDs from query parameter
+  const playerIds = req.query.player_ids;  
+  if (!playerIds) {
+    return res.status(400).json({ error: 'No player IDs provided' });
+  }
+
+  // split on commas
+  const ids = playerIds.split(',').map(id => parseInt(id));
+
+  connection.query(`
+  WITH defense_table AS (
+    SELECT PLAYER_ID, SUM(DREB) + SUM(BLK) + SUM(STL) AS DEFENSIVE_PLAYS
+    FROM Games_details
+    GROUP BY PLAYER_ID
+  ),
+  defensive_percentiles AS (
+    SELECT PLAYER_ID, DEFENSIVE_PLAYS,
+           NTILE(10) OVER (ORDER BY DEFENSIVE_PLAYS DESC) AS percentile_rank
+    FROM defense_table
+  )
+  SELECT dp.PLAYER_ID,
+         CASE
+             WHEN dp.percentile_rank = 1 THEN '10/10'
+             WHEN dp.percentile_rank = 2 THEN '9/10'
+             WHEN dp.percentile_rank = 3 THEN '8/10'
+             WHEN dp.percentile_rank = 4 THEN '7/10'
+             WHEN dp.percentile_rank = 5 THEN '6/10'
+             WHEN dp.percentile_rank = 6 THEN '5/10'
+             WHEN dp.percentile_rank = 7 THEN '4/10'
+             WHEN dp.percentile_rank = 8 THEN '3/10'
+             WHEN dp.percentile_rank = 9 THEN '2/10'
+             ELSE '1/10'
+         END AS defensive_rank
+  FROM defensive_percentiles dp
+  WHERE dp.PLAYER_ID IN (${ids})
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
+// Route 20: GET /players/teamwork_stats
+const teamworkStats = async function (req, res) {
+  // Get player IDs from query parameter
+  const playerIds = req.query.player_ids;  
+  if (!playerIds) {
+    return res.status(400).json({ error: 'No player IDs provided' });
+  }
+
+  // split on commas
+  const ids = playerIds.split(',').map(id => parseInt(id));
+
+  connection.query(`
+  WITH assist_table AS (
+    SELECT PLAYER_ID, SUM(AST) AS ASSISTS
+    FROM Games_details
+    GROUP BY PLAYER_ID
+  ),
+  assist_percentiles AS (
+    SELECT PLAYER_ID, ASSISTS,
+           NTILE(10) OVER (ORDER BY ASSISTS DESC) AS percentile_rank
+    FROM assist_table
+  )
+  SELECT PLAYER_ID,
+         CASE
+             WHEN percentile_rank = 1 THEN '10/10'
+             WHEN percentile_rank = 2 THEN '9/10'
+             WHEN percentile_rank = 3 THEN '8/10'
+             WHEN percentile_rank = 4 THEN '7/10'
+             WHEN percentile_rank = 5 THEN '6/10'
+             WHEN percentile_rank = 6 THEN '5/10'
+             WHEN percentile_rank = 7 THEN '4/10'
+             WHEN percentile_rank = 8 THEN '3/10'
+             WHEN percentile_rank = 9 THEN '2/10'
+             ELSE '1/10'
+         END AS assist_rank
+  FROM assist_percentiles
+  WHERE PLAYER_ID IN (${ids})
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
+// Route 21: GET /players/current_team
+const teamName = async function (req, res) {
+  // Get player IDs from query parameter
+  const playerIds = req.query.player_ids;  
+  if (!playerIds) {
+    return res.status(400).json({ error: 'No player IDs provided' });
+  }
+
+  // split on commas
+  const ids = playerIds.split(',').map(id => parseInt(id));
+
+  connection.query(`
+  SELECT p.PLAYER_ID, p.TEAM_ID, t.NICKNAME, p.SEASON
+  FROM Players p
+  JOIN Teams t ON p.TEAM_ID = t.TEAM_ID
+  WHERE p.SEASON = (
+    SELECT MAX(p2.SEASON)
+    FROM Players p2
+    WHERE p2.PLAYER_ID = p.PLAYER_ID
+  )
+  AND p.PLAYER_ID IN (${ids})
+  ORDER BY p.SEASON DESC;
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
+// Route 22: GET /players/get_team_legacy
+const getTeamLegacy = async function (req, res) {
+  // Get player IDs from query parameter
+  const teamIds = req.query.team_ids;  
+  if (!teamIds) {
+    return res.status(400).json({ error: 'No player IDs provided' });
+  }
+
+  // split on commas
+  const ids = teamIds.split(',').map(id => parseInt(id));
+
+  connection.query(`
+  WITH end_of_season AS (
+    SELECT Rankings.SEASON_ID AS r_season_id, MAX(Rankings.STANDINGSDATE) AS latest_date
+    FROM Rankings
+    GROUP BY SEASON_ID
+  ),
+  end_of_season_stats AS (
+    SELECT *
+    FROM Rankings r JOIN end_of_season es
+        ON r.SEASON_ID = es.r_season_id
+        AND r.STANDINGSDATE = es.latest_date
+  ),
+  total_wins AS (
+    SELECT TEAM_ID, SUM(W) AS total_team_wins
+    FROM end_of_season_stats
+    GROUP BY TEAM_ID
+  ),
+  team_percentile_rank AS (
+    SELECT TEAM_ID, total_team_wins,
+            NTILE(10) OVER(ORDER BY total_team_wins DESC) AS win_rank
+    FROM total_wins
+  )
+  SELECT tp.TEAM_ID, t.NICKNAME,
+    CASE
+        WHEN tp.win_rank = 1 THEN '10/10'
+        WHEN tp.win_rank = 2 THEN '9/10'
+        WHEN tp.win_rank = 3 THEN '8/10'
+        WHEN tp.win_rank = 4 THEN '7/10'
+        WHEN tp.win_rank = 5 THEN '6/10'
+        WHEN tp.win_rank = 6 THEN '5/10'
+        WHEN tp.win_rank = 7 THEN '4/10'
+        WHEN tp.win_rank = 8 THEN '3/10'
+        WHEN tp.win_rank = 9 THEN '2/10'
+        ELSE '1/10'
+    END AS franchise_legacy
+  FROM team_percentile_rank tp
+    JOIN Teams t ON t.TEAM_ID = tp.TEAM_ID;
+  WHERE t.TEAM_ID IN (${ids})
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
 
 module.exports = {
   playerCard,
@@ -581,5 +881,11 @@ module.exports = {
   allPlayerStats,
   saveOpenedCards,
   getSavedCards,
-  clearSavedCards
+  clearSavedCards,
+  getRandomPlayers,
+  offensiveStats,
+  defensiveStats,
+  teamworkStats,
+  teamName,
+  getTeamLegacy,
 };
