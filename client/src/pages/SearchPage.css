@@ -54,25 +54,21 @@
 }
 
 /* Table Container Styles */
-.table-container {
-    width: 80%;
-    overflow-x: auto;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 8px;
-    padding: 10px;
-    margin: auto;
-}
-
+/* Table Styles */
 table {
     width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
     border-collapse: collapse;
+    margin-top: 10px;
+    border: 2px solid black;
 }
 
 th,
 td {
-    text-align: center;
-    padding: 8px;
     border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
 }
 
 th {
@@ -81,9 +77,22 @@ th {
 }
 
 tbody tr:nth-child(odd) {
-    background-color: #f9f9f9;
+    background-color: #f2f2f2;
 }
 
-tbody tr:hover {
-    background-color: #f1f1f1;
+.sort-button {
+    background-color: #f59149;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.sort-button:hover {
+    background-color: #f59149;
+    color: #3b3736;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
 }

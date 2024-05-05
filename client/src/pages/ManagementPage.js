@@ -61,17 +61,20 @@ const ManagementPage = () => {
                 <Link to="/open-pack">
                     <button className="management-open-pack-button">Open Pack Page</button>
                 </Link>
+                <Link to="/search">
+                    <button className="home-search-button">Search Players</button>
+                </Link>
             </div>
             <table>
                 <thead>
                     <tr>
-                    <th><button onClick={() => handleSort('PLAYER_NAME')} className="sort-button">Player Name</button></th>
-                    <th><button onClick={() => handleSort('AVG_EFF')} className="sort-button">Efficiency</button></th>
-                    <th><button onClick={() => handleSort('3pt_rank')} className="sort-button">3PT Rank</button></th>
-                    <th><button onClick={() => handleSort('fg_rank')} className="sort-button">FG Rank</button></th>
-                    <th><button onClick={() => handleSort('defensive_rank')} className="sort-button">Defensive Rank</button></th>
-                    <th><button onClick={() => handleSort('assist_rank')} className="sort-button">Teamwork</button></th>
-                    <th><button onClick={() => handleSort('NICKNAME')} className="sort-button">Current Team</button></th>
+                        <th><button onClick={() => handleSort('PLAYER_NAME')} className="sort-button">Player Name</button></th>
+                        <th><button onClick={() => handleSort('AVG_EFF')} className="sort-button">Efficiency</button></th>
+                        <th><button onClick={() => handleSort('3pt_rank')} className="sort-button">3PT Rank</button></th>
+                        <th><button onClick={() => handleSort('fg_rank')} className="sort-button">FG Rank</button></th>
+                        <th><button onClick={() => handleSort('defensive_rank')} className="sort-button">Defensive Rank</button></th>
+                        <th><button onClick={() => handleSort('assist_rank')} className="sort-button">Teamwork</button></th>
+                        <th><button onClick={() => handleSort('NICKNAME')} className="sort-button">Current Team</button></th>
                     </tr>
                 </thead>
                 <tbody>

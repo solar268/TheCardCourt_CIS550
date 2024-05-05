@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './SearchPage.css';
 
 const SearchPage = () => {
@@ -16,9 +17,20 @@ const SearchPage = () => {
     };
 
     return (
-        <div className="search-page"> {/* Main container with background styling */}
-            <div className="search-container"> {/* Form and inputs */}
-                <h1>Search NBA Players</h1>
+        <div className="search-page">
+            <h1>Find your NBA Player card</h1>
+            <div className="home-button-container">
+                <Link to="/">
+                    <button className="management-home-button">Back to Home</button>
+                </Link>
+                <Link to="/open-pack">
+                    <button className="management-open-pack-button">Open Pack Page</button>
+                </Link>
+                <Link to="/management">
+                    <button className="open-pack-button">Card Management Page</button>
+                </Link>
+            </div>
+            <div className="search-container">
                 <input
                     type="text"
                     className="search-input"

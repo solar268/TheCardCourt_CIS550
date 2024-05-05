@@ -17,13 +17,13 @@ const OpenPackPage = () => {
             if (!response.ok) throw new Error('Failed to fetch random players');
             const players = await response.json();
             const playerIds = players.map(player => player.PLAYER_ID).join(',');
-    
+
             // function to fetch data from a specific endpoint
             const fetchStats = async (endpoint) => {
                 const statsResponse = await fetch(`http://localhost:8080/players/${endpoint}?player_ids=${playerIds}`);
                 if (!statsResponse.ok) throw new Error(`Failed to fetch ${endpoint}`);
                 return statsResponse.json();
-            };  
+            };
 
             // const fetchTeamStats = async (endpoint) => {
             //     const statsResponse = await fetch(`http://localhost:8080/teams/${endpoint}?player_ids=${playerIds}`);
@@ -39,7 +39,7 @@ const OpenPackPage = () => {
             const defensive = await fetchStats('defensive_stats');
             const teamwork = await fetchStats('teamwork_stats');
             const currentTeam = await fetchStats('current_team');
-            
+
             // // fetch data for team
             // const teamLegacy = await fetchTeamStats('get_team_legacy'); // need to change split out different fetch for this
             // const homecourtAdvantage = await fetchTeamStats('get_team_legacy');
@@ -54,7 +54,7 @@ const OpenPackPage = () => {
                     ...teamwork.find(t => t.PLAYER_ID === player.PLAYER_ID),
                     ...currentTeam.find(ct => ct.PLAYER_ID === player.PLAYER_ID),
                 };
-            
+
 
                 // if efficiency is NaN, set to null to later remove
                 if (isNaN(playerData.AVG_EFF)) {
@@ -70,10 +70,10 @@ const OpenPackPage = () => {
         } catch (error) {
             setIsLoading(false);
             console.error('Error fetching data:', error);
-        } 
+        }
     };
 
-    const handleSaveCards = () => { 
+    const handleSaveCards = () => {
         const cardsToSave = playerCards.map(player => ({
             PLAYER_ID: player.PLAYER_ID,
             PLAYER_NAME: player.PLAYER_NAME,
@@ -83,7 +83,7 @@ const OpenPackPage = () => {
             defensive_rank: player.defensive_rank,
             assist_rank: player.assist_rank,
             NICKNAME: player.NICKNAME,
-          }));
+        }));
         fetch('http://localhost:8080/save-cards', {
             method: 'POST',
             headers: {
@@ -116,6 +116,9 @@ const OpenPackPage = () => {
                 )}
                 <Link to="/management">
                     <button className="open-pack-button">Card Management Page</button>
+                </Link>
+                <Link to="/search">
+                    <button className="home-search-button">Search Players</button>
                 </Link>
             </div>
             {isLoading && <img src={loading_ball} alt="Loading" className="loading-icon" />}
