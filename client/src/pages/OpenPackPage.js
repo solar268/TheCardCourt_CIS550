@@ -110,7 +110,7 @@ const OpenPackPage = () => {
         <div className="open-pack-page">
             <h1>Craft your Dream NBA Team</h1>
             <div className="home-button-container">
-                <button className="open-pack-button" onClick={handleOpenPack}>Open Pack</button>
+                <button className="open-pack-shiny-button" onClick={handleOpenPack}>Open Pack</button>
                 {showCards && (
                     <button className="save-card-button" onClick={handleSaveCards}>Save Cards</button>
                 )}
