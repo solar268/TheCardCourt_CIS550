@@ -50,15 +50,15 @@ The Search Page allows users to explore NBA player cards by entering specific cr
 
 ### Open Pack Page with Open Pack button and Animation
 
-![results page with navbar](./client/src/images/openpackpage.JPG)
+![open pack page](./client/src/images/openpackpage.JPG)
 
 ### Management Page with Reset button
 
-![business page](./client/src/images/managementpage.JPG)
+![management page](./client/src/images/managementpage.JPG)
 
 ### Search Page
 
-![review page](./client/src/images/searchpage.JPG)
+![search page](./client/src/images/searchpage.JPG)
 
 ## Credits
 
