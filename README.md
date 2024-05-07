@@ -58,7 +58,7 @@ The Search Page allows users to explore NBA player cards by entering specific cr
 
 ### Search Page
 
-![review page](./client/src/images/screenshots/searchpage.JPG)
+![review page](./client/src/images/searchpage.JPG)
 
 ## Credits
 
