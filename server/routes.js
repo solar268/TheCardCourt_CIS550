@@ -563,7 +563,7 @@ const allPlayerStats = async function (req, res) {
 const saveOpenedCards = (req, res) => {
   const cards = req.body.cards;
   if (!Array.isArray(cards) || cards.length === 0) {
-    return res.status(400).json({ error: 'Invalid card data. Expected a non-empty array of cards.' });
+    return res.status(400).json({ error: 'Error. Data should be a non-empty array of cards.' });
   }
 
   const query = `
@@ -914,8 +914,6 @@ const searchPlayers = async function (req, res) {
     }
   });
 };
-
-
 
 module.exports = {
   playerCard,
