@@ -3,9 +3,10 @@
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [Documentation](#documentation)
-3. [Screenshots](#screenshots)
-4. [Credits](#credits)
+2. [Getting Started](#getting-started)
+3. [Documentation](#documentation)
+4. [Screenshots](#screenshots)
+5. [Credits](#credits)
 
 ## Introduction
 
@@ -23,6 +24,15 @@ The application backend is powered by a MySQL database, structured to store exte
 Each interaction on the frontend triggers specific SQL queries that interact with the database to retrieve or manipulate data as required, ensuring real-time data access and updates. This architecture not only supports robust data handling but also ensures that the application scales well with increasing data and user base.
 
 In summary, CardCourt aims to bridge the gap between digital and physical card collecting, providing a platform that is both enjoyable for enthusiasts and robust enough for serious collectors, all while ensuring data integrity and performance.
+
+## Getting Started 
+
+Assuming you're using a Terminal shell,
+1. Make sure you're in the project directory
+2. Open a new tab.
+3. In tab 1, navigate into `server` folder, type `npm i` and hit enter, and then type `npm start` and hit enter.
+4. In tab 2, navigate into `client` folder, type `npm i` and hit enter, and then type `npm start` and hit enter.
+5. Now the web app should run successfully. If any error occurs, please check if you have latest version of NodeJS installed in your computer. 
 
 ## Documentation
 
